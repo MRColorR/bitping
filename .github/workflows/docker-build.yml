@@ -1,0 +1,77 @@
+name: Docker Auto Build and Push
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs at 00:00 UTC daily
+
+env:
+  BITPING_UPDATE_JSON: ${{ secrets.BITPING_UPDATE_JSON }}
+  DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+  IMAGE_NAME: 'mrcolorrain/bitping'
+  TAG: 'latest'
+  MAX_DELAY: 60 # Maximum delay in seconds
+  VERSION_FILE_PATH: '.github/workflows/.current_version' # Path to the version file
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Randomized Delay
+        run: |
+          sleep $((RANDOM % $MAX_DELAY))
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check for updates in Bitpingd
+        id: check-update
+        run: |
+          update_json=$(curl --silent $BITPING_UPDATE_JSON)
+          last_version=$(echo "$update_json" | grep '"version":' | sed -E 's/.*"([^"]+)".*/\1/')
+          echo "Latest version: $last_version"
+          echo "::set-output name=version::$last_version"
+
+      - name: Compare with previous version
+        id: compare-version
+        run: |
+          mkdir -p $(dirname ${{ env.VERSION_FILE_PATH }})
+          previous_ver=$(cat ${{ env.VERSION_FILE_PATH }} || echo 'none')
+          echo "Previous version: $previous_ver"
+          if [ "$previous_ver" != "${{ steps.check-update.outputs.version }}" ]; then
+            echo "New version available. Triggering build..."
+            echo "${{ steps.check-update.outputs.version }}" > ${{ env.VERSION_FILE_PATH }}
+            echo "::set-output name=trigger_build::true"
+          else
+            echo "No new version. Skipping build."
+            echo "::set-output name=trigger_build::false"
+          fi
+
+      - name: Set up Docker Buildx
+        if: steps.compare-version.outputs.trigger_build == 'true'
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        if: steps.compare-version.outputs.trigger_build == 'true'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        if: steps.compare-version.outputs.trigger_build == 'true'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            -t mrcolorrain/bitping:latest \
+            --push .
+
+      - name: Update version file
+        if: steps.compare-version.outputs.trigger_build == 'true'
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add .current_version
+          git commit -m "Update version to ${{ steps.check-update.outputs.version }}"
+          git push
