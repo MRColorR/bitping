@@ -3,6 +3,10 @@ name: Docker Auto Build and Push
 on:
   schedule:
     - cron: '0 0 * * *' # Runs at 00:00 UTC daily
+  push:
+      branches:
+          - main
+  workflow_dispatch:
 
 env:
   BITPING_UPDATE_JSON: ${{ secrets.BITPING_UPDATE_JSON }}
