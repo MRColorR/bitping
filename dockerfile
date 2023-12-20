@@ -39,6 +39,6 @@ RUN curl https://bitping.com/install.sh | bash
 # RUN source ~/.bashrc
 
 # Set tini as the entrypoint and the custom script as the command
-ENTRYPOINT ["/usr/bin/tini", "--"]
+ENTRYPOINT ["tini", "--"]
 CMD ["/entrypoint.sh"]
 
