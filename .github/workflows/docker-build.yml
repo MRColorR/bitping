@@ -53,6 +53,8 @@ jobs:
           else
             echo "No new version. Skipping build."
             echo "::set-output name=trigger_build::false"
+            fi
+            
       - name: Setup QEMU
         if: steps.compare-version.outputs.trigger_build == 'true'
         uses: docker/setup-qemu-action@v3
