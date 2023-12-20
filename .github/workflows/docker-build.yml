@@ -10,8 +10,6 @@ on:
 
 env:
   BITPING_UPDATE_JSON: ${{ secrets.BITPING_UPDATE_JSON }}
-  DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
   IMAGE_NAME: 'mrcolorrain/bitping'
   TAG: 'latest'
   MAX_DELAY: 60 # Maximum delay in seconds
@@ -64,7 +62,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build and Push Docker Image
         if: steps.compare-version.outputs.trigger_build == 'true'
