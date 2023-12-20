@@ -9,19 +9,16 @@ ENV DEBIAN_FRONTEND=noninteractive \
     BITPING_PASSWD=""
 
 # Install necessary packages
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -qqy \
+RUN apt update && \
+    apt upgrade -y && \
+    apt install -qqy \
     bash \
     tini \
     supervisor \
     curl \
     wget \
     unzip \
-    expect \
-    apt-get autoremove && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/install.deb
+    expect
 
 # Set up working directory
 WORKDIR /app
