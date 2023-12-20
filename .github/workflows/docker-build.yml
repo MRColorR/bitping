@@ -15,7 +15,7 @@ env:
   IMAGE_NAME: 'mrcolorrain/bitping'
   TAG: 'latest'
   MAX_DELAY: 60 # Maximum delay in seconds
-  VERSION_FILE_PATH: '.current_version' # Path to the version file
+  VERSION_FILE_PATH: '.github\workflows\.current_version' # Path to the version file
 
 jobs:
   build-and-push:
