@@ -13,7 +13,7 @@ env:
   IMAGE_NAME: 'mrcolorrain/bitping'
   TAG: 'latest'
   MAX_DELAY: 60 # Maximum delay in seconds
-  VERSION_FILE_PATH: '.github/workflows/.current_version' # Path to the version file
+  VERSION_FILE_PATH: '.current_version' # Path to the version file
 
 jobs:
   build-and-push:
@@ -54,7 +54,7 @@ jobs:
             echo "No new version. Skipping build."
             echo "::set-output name=trigger_build::false"
             fi
-            
+
       - name: Setup QEMU
         if: steps.compare-version.outputs.trigger_build == 'true'
         uses: docker/setup-qemu-action@v3
