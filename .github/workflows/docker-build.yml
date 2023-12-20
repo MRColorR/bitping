@@ -39,7 +39,12 @@ jobs:
         id: compare-version
         run: |
           mkdir -p $(dirname ${{ env.VERSION_FILE_PATH }})
-          previous_ver=$(cat ${{ env.VERSION_FILE_PATH }} || echo 'none')
+          if [ -f ${{ env.VERSION_FILE_PATH }} ]; then
+            previous_ver=$(cat ${{ env.VERSION_FILE_PATH }})
+          else
+            echo 'none' > ${{ env.VERSION_FILE_PATH }}
+            previous_ver='none'
+          fi
           echo "Previous version: $previous_ver"
           if [ "$previous_ver" != "${{ steps.check-update.outputs.version }}" ]; then
             echo "New version available. Triggering build..."
@@ -48,7 +53,6 @@ jobs:
           else
             echo "No new version. Skipping build."
             echo "::set-output name=trigger_build::false"
-          fi
       - name: Setup QEMU
         if: steps.compare-version.outputs.trigger_build == 'true'
         uses: docker/setup-qemu-action@v3
