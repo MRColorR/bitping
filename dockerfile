@@ -19,7 +19,6 @@ RUN apt-get update && \
     wget \
     unzip \
     expect \
-    && rm -rf /var/lib/apt/lists/* \
     apt-get autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/install.deb
