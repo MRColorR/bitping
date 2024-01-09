@@ -90,7 +90,7 @@ jobs:
           git push
 
       - name: Create and push tag
-
+        if: steps.compare-version.outputs.trigger_build == 'true'
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'mrcolorr@users.noreply.github.com'
