@@ -92,5 +92,7 @@ jobs:
       - name: Create and push tag
 
         run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'mrcolorr@users.noreply.github.com'
           git tag -a ${{ steps.check-update.outputs.version }} -m "Update to ${{ steps.check-update.outputs.version }}"
           git push origin ${{ steps.check-update.outputs.version }}
