@@ -88,3 +88,9 @@ jobs:
           git add ${{ env.VERSION_FILE_PATH }}
           git commit -m "Update version file to ${{ steps.check-update.outputs.version }}"
           git push
+          
+      - name: Create and push tag
+        if: steps.compare-version.outputs.trigger_build == 'true'
+        run: |
+          git tag -a ${{ steps.check-update.outputs.version }} -m "Update to ${{ steps.check-update.outputs.version }}"
+          git push origin ${{ steps.check-update.outputs.version }}
