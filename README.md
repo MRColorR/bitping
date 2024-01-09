@@ -1,4 +1,8 @@
 # Unofficial Bitpingd Docker Container 🚀
+![Docker Pulls](https://img.shields.io/docker/pulls/mrcolorrain/bitping)
+![Docker Stars](https://img.shields.io/docker/stars/mrcolorrain/bitping)
+
+
 🌟 Leave a star if you like this project! Thank you for your support. 🙂
 
 ## Introduction 📖
