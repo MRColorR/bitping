@@ -1,7 +1,8 @@
 # Unofficial Bitpingd Docker Container 🚀
-![Docker Pulls](https://img.shields.io/docker/pulls/mrcolorrain/bitping)
-![Docker Stars](https://img.shields.io/docker/stars/mrcolorrain/bitping)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/MRColorR/bitping/docker-build.yml)
+![Docker Pulls](https://img.shields.io/docker/pulls/mrcolorrain/bitping?link=https%3A%2F%2Fhub.docker.com%2Fr%2Fmrcolorrain%2Fbitping)
+![Docker Stars](https://img.shields.io/docker/stars/mrcolorrain/bitping?link=https%3A%2F%2Fhub.docker.com%2Fr%2Fmrcolorrain%2Fbitping)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/MRColorR/bitping/docker-build.yml?link=https%3A%2F%2Fhub.docker.com%2Fr%2Fmrcolorrain%2Fbitping)
+
 
 
 
