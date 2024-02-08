@@ -35,7 +35,7 @@ jobs:
           update_json=$(curl --silent ${{ env.BITPING_UPDATE_JSON }})
           last_version=$(echo "$update_json" | grep '"version":' | sed -E 's/.*"([^"]+)".*/\1/')
           echo "Latest version: $last_version"
-          echo "version=$last_version"" >> $GITHUB_OUTPUT
+          echo "version=$last_version" >> $GITHUB_OUTPUT
 
       - name: Compare with previous version
         id: compare-version
@@ -51,10 +51,10 @@ jobs:
           if [ "$previous_ver" != "${{ steps.check-update.outputs.version }}" ]; then
             echo "New version available. Triggering build..."
             echo "${{ steps.check-update.outputs.version }}" > ${{ env.VERSION_FILE_PATH }}
-            echo "trigger_build=true"" >> $GITHUB_OUTPUT
+            echo "trigger_build=true" >> $GITHUB_OUTPUT
           else
             echo "No new version. Skipping build."
-            echo "trigger_build=false"" >> $GITHUB_OUTPUT
+            echo "trigger_build=false" >> $GITHUB_OUTPUT
             fi
 
       - name: Setup QEMU
