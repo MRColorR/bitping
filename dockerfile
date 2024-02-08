@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     BITPING_EMAIL="" \
     BITPING_PASSWD=""
 
-# Install necessary packages
+# Install necessary packages then clean up to reduce image size
 RUN apt update && \
     apt upgrade -y && \
     apt install -qqy \
@@ -18,7 +18,10 @@ RUN apt update && \
     curl \
     wget \
     unzip \
-    expect
+    expect && \
+    apt autoremove --purge -y && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set up working directory
 WORKDIR /app
@@ -33,6 +36,9 @@ RUN chmod +x /entrypoint.sh
 # Download and install bitpingd
 RUN curl https://bitping.com/install.sh | bash
 # RUN source ~/.bashrc
+
+# Remove the tar.gz file downloaded from the install script after installation
+RUN rm -rf /app/*.tar.gz
 
 # Set tini as the entrypoint and the custom script as the command
 ENTRYPOINT ["tini", "--"]
