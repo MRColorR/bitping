@@ -16,6 +16,7 @@ This repository contains the Dockerfile and configuration for an unofficial, con
 ## Features ✨
 
 - **Debian small Base Image**: Utilizes the latest version of Debian for a small footprint.
+- **Multi-Architecture Support**: Supports x86_64, arm64 and armv7 architectures.
 - **Bitpingd and Bitping-node**: Includes both `bitpingd` service.
 - **Tini and Supervisor Integration**: Ensures proper startup and management of services using `tini` as the init system and `supervisor` for process control.
 - **Automated Download and Setup**: Automatically downloads and sets up the Bitping node.
