@@ -7,7 +7,7 @@
 
 
 
-🌟 Leave a star if you like this project! Thank you for your support. 🙂
+🌟 **If you find this project helpful, please consider leaving a star. Your support is appreciated!🙂** 
 
 ## Introduction 📖
 
