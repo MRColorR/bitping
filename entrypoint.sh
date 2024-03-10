@@ -11,8 +11,10 @@ performLogin() {
     expect -c "
     spawn bitpingd login
     expect \"Email:\"
+    sleep [expr {rand()*3}]
     send \"$BITPING_EMAIL\r\"
     expect \"Password:\"
+    sleep [expr {rand()*3}]
     send \"$BITPING_PASSWD\r\"
     expect eof
     "
@@ -53,6 +55,9 @@ else
     performLogin
     echo "Login function completed"
 fi
+
+## Change the refresh interval to 1 minute to reduce logging
+bitpingd config refresh-interval 60sec
 
 # Start Supervisor
 mkdir -p /var/log/supervisor/children
