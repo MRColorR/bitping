@@ -80,8 +80,8 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           tags: ${{ env.IMAGE_NAME}}:${{ env.TAG }}
           push: true
-          cache-from: type=inline
-          cache-to: type=inline
+          cache-from: type=gha
+          cache-to: type=gha
 
       - name: Commit and push updates version file
         if: steps.compare-version.outputs.trigger_build == 'true'
